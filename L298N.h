@@ -1,5 +1,5 @@
 #include<reg52.h>  
-//--------------------L298N电机控制模块-----for STC51XX/52XX MCU--------
+//--------------------L298N电机控制模块-----for-STC51XX/52XX MCU--------
 #ifndef _L298N_H_
 #define _L298N_H_
 
