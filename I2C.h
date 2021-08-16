@@ -24,11 +24,10 @@ void I2C_stop(){
 }
 
 
-//I2C发送字节
+//I2C发送一个字节   Byte:要发送的字节
 void I2C_SendByte(unsigned char Byte){
 
     unsigned char i=0;
-
     for(i;i<8;i++){
         I2C_SDA=Byte&(0x80>>i);//byte最高位取出来 赋值给SDA
         I2C_SCL=1;//  0x80>>i 右移i位
@@ -37,7 +36,7 @@ void I2C_SendByte(unsigned char Byte){
 }
 
 
-//I2C接收字节
+//I2C接收一个字节  返回值：接收到的一个字节数据
 unsigned char I2C_ReceiveByte(){
 
     unsigned char i,Byte=0x00;
@@ -53,7 +52,7 @@ unsigned char I2C_ReceiveByte(){
 }
 
 
-//I2C发送应答
+//I2C发送应答 Ackbit:应答位 0为应答 1为费应答
 void I2C_SendAck(unsigned char AckBit){// bit C51中特有数据类型 只能存一位0/1
 
     I2C_SDA=AckBit;
@@ -62,7 +61,7 @@ void I2C_SendAck(unsigned char AckBit){// bit C51中特有数据类型 只能存
 }
 
 
-//I2C接收应答
+//I2C接收应答 返回值：接收到的应答位
 unsigned char I2C_ReceiveAck(){
     
     unsigned char AckBit=0;
@@ -74,8 +73,5 @@ unsigned char I2C_ReceiveAck(){
 }
 
 
-
-
-
-
 #endif//文件结束
+
