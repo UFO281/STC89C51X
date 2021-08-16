@@ -1,5 +1,4 @@
-//--------------源代码源自江科大自化协bili-------感写江科大！！！------
-//Source code from jUST self - association bili------- feeling write JUST!!
+//--------------源代码源自B站UP主江科大自化协-------感写UP主！！！------
 #ifndef __LCD1602_H__
 #define __LCD1602_H__
 #include <REGX52.H>
@@ -8,6 +7,7 @@
 sbit LCD_RS=P2^6;
 sbit LCD_RW=P2^5;
 sbit LCD_EN=P2^7;
+
 
 //---------------函数定义-----------往下---
 
@@ -33,6 +33,7 @@ void LCD_WriteCommand(unsigned char Command){//LCD1602写命令 Command 要写�
 }
 
 
+
 void LCD_WriteData(unsigned char Data){//LCD1602写数据  Data 要写入的数据
 	LCD_RS=1;
 	LCD_RW=0;
@@ -42,6 +43,7 @@ void LCD_WriteData(unsigned char Data){//LCD1602写数据  Data 要写入的数�
 	LCD_EN=0;
 	LCD_Delay();
 }
+
 
 
 void LCD_SetCursor(unsigned char Line,unsigned char Column){//LCD1602设置光标位置 Line 行位置，范围：1~2 Column 列位置，范围：1~16
@@ -56,6 +58,7 @@ void LCD_SetCursor(unsigned char Line,unsigned char Column){//LCD1602设置光�
 }
 
 
+
 void LCD_Init(){// LCD1602初始化函数
 	LCD_WriteCommand(0x38);//八位数据接口，两行显示，5*7点阵
 	LCD_WriteCommand(0x0c);//显示开，光标关，闪烁关
@@ -64,12 +67,14 @@ void LCD_Init(){// LCD1602初始化函数
 }
 
 
+
 void LCD_ShowChar(unsigned char Line,unsigned char Column,char Char){//在LCD1602指定位置上显示一个字符 
 //Line 行位置，范围：1~2 Column 列位置，范围：1~16 Char 要显示的字符
 
 	LCD_SetCursor(Line,Column);
 	LCD_WriteData(Char);
 }
+
 
 
 void LCD_ShowString(unsigned char Line,unsigned char Column,char *String){//在LCD1602指定位置开始显示所给字符串
@@ -84,6 +89,7 @@ void LCD_ShowString(unsigned char Line,unsigned char Column,char *String){//在L
 }
 
 
+
 int LCD_Pow(int X,int Y){//返回值=X的Y次方
 	unsigned char i;
 	int Result=1;
@@ -93,6 +99,7 @@ int LCD_Pow(int X,int Y){//返回值=X的Y次方
 	}
 	return Result;
 }
+
 
 
 void LCD_ShowNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length){//在LCD1602指定位置开始显示所给数字
@@ -106,6 +113,7 @@ void LCD_ShowNum(unsigned char Line,unsigned char Column,unsigned int Number,uns
 		LCD_WriteData(Number/LCD_Pow(10,i-1)%10+'0');
 	}
 }
+
 
 
 void LCD_ShowSignedNum(unsigned char Line,unsigned char Column,int Number,unsigned char Length){
@@ -132,6 +140,7 @@ void LCD_ShowSignedNum(unsigned char Line,unsigned char Column,int Number,unsign
 }
 
 
+
 void LCD_ShowHexNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
 {//在LCD1602指定位置开始以十六进制显示所给数字
 //Line 起始行位置，范围：1~2 Column 起始列位置，范围：1~16
@@ -151,6 +160,7 @@ void LCD_ShowHexNum(unsigned char Line,unsigned char Column,unsigned int Number,
 		}
 	}
 }
+
 
 
 void LCD_ShowBinNum(unsigned char Line,unsigned char Column,unsigned int Number,unsigned char Length)
@@ -183,7 +193,7 @@ void main(){
 
 	}
 }
-*/
+ -------------使用例子-----------*/
 
 
 
