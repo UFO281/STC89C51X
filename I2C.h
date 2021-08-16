@@ -1,49 +1,49 @@
 #include"reg52.h"
-#ifndef _I2C_H_//Í·ÎÄ¼ş¿ªÊ¼
-#define _I2C_H_//----------51µ¥Æ¬»úÔËĞĞÒ»ÌõÓï¾äµÄÊ±¼äÖÁÉÙÊÇ1us--------
- sbit I2C_SCL=P2^1;//I2cµÄÊ±ÖÓÏß
- sbit I2C_SDA=P2^0;//I2CµÄÊı¾İÏß
- /*SCLµÍµçÆ½ÆÚ¼ä SDA¿ÉÒÔ·¢Éú±ä»¯ ¶ÁÈ¡Êı¾İ
- µ«ÊÇSCLÔÚ¸ßµçÆ½ÆÚ¼ä SDA²»ÄÜ±ä»¯£¬µÍµçÆ½¾ÍÊÇµÍµçÆ½£¬¸ßµçÆ½¾ÍÊÇ¸ßµçÆ½*/
+#ifndef _I2C_H_//å¤´æ–‡ä»¶å¼€å§‹
+#define _I2C_H_//----------51å•ç‰‡æœºè¿è¡Œä¸€æ¡è¯­å¥çš„æ—¶é—´è‡³å°‘æ˜¯1us--------
+ sbit I2C_SCL=P2^1;//I2cçš„æ—¶é’Ÿçº¿
+ sbit I2C_SDA=P2^0;//I2Cçš„æ•°æ®çº¿
+ /*SCLä½ç”µå¹³æœŸé—´ SDAå¯ä»¥å‘ç”Ÿå˜åŒ– è¯»å–æ•°æ®
+ ä½†æ˜¯SCLåœ¨é«˜ç”µå¹³æœŸé—´ SDAä¸èƒ½å˜åŒ–ï¼Œä½ç”µå¹³å°±æ˜¯ä½ç”µå¹³ï¼Œé«˜ç”µå¹³å°±æ˜¯é«˜ç”µå¹³*/
 
 
-//I2C¿ªÊ¼
+//I2Cå¼€å§‹
 void I2C_start(){
-    I2C_SCL=1;//SCLÎª¸ßµçÆ½
-    I2C_SDA=1;//SDA²úÉú¸öÏÂ½µÑØ
+    I2C_SCL=1;//SCLä¸ºé«˜ç”µå¹³
+    I2C_SDA=1;//SDAäº§ç”Ÿä¸ªä¸‹é™æ²¿
     I2C_SDA=0;
     I2C_SCL=0;
 }
 
-//I2C½áÊø
+//I2Cç»“æŸ
 void I2C_stop(){
     I2C_SCL=0;
-    I2C_SDA=0;//²úÉú¸öÉÏÉıÑØ
+    I2C_SDA=0;//äº§ç”Ÿä¸ªä¸Šå‡æ²¿
     I2C_SDA=1;
     I2C_SCL=1;
 }
 
 
-//I2C·¢ËÍ×Ö½Ú
+//I2Cå‘é€å­—èŠ‚
 void I2C_SendByte(unsigned char Byte){
 
     unsigned char i=0;
 
     for(i;i<8;i++){
-        I2C_SDA=Byte&(0x80>>i);//byte×î¸ßÎ»È¡³öÀ´ ¸³Öµ¸øSDA
-        I2C_SCL=1;//  0x80>>i ÓÒÒÆiÎ»
+        I2C_SDA=Byte&(0x80>>i);//byteæœ€é«˜ä½å–å‡ºæ¥ èµ‹å€¼ç»™SDA
+        I2C_SCL=1;//  0x80>>i å³ç§»iä½
         I2C_SCL=0;
     }
 }
 
 
-//I2C½ÓÊÜ×Ö½Ú
+//I2Cæ¥æ”¶å­—èŠ‚
 unsigned char I2C_ReceiveByte(){
 
     unsigned char i,Byte=0x00;
-    I2C_SDA=1;//ÊÍ·Å×ÜÏß
+    I2C_SDA=1;//é‡Šæ”¾æ€»çº¿
     for(i=0;i<8;i++){ 
-        I2C_SCL=1;//SCL¸ßµçÆ½²Å¿ÉÒÔ¶ÁÈ¡SDA
+        I2C_SCL=1;//SCLé«˜ç”µå¹³æ‰å¯ä»¥è¯»å–SDA
         if(I2C_SDA){
             Byte|=(0x80>>i);
         }
@@ -53,8 +53,8 @@ unsigned char I2C_ReceiveByte(){
 }
 
 
-//I2C·¢ËÍÓ¦´ğ
-void I2C_SendAck(unsigned char AckBit){// bit C51ÖĞÌØÓĞÊı¾İÀàĞÍ Ö»ÄÜ´æÒ»Î»0/1
+//I2Cå‘é€åº”ç­”
+void I2C_SendAck(unsigned char AckBit){// bit C51ä¸­ç‰¹æœ‰æ•°æ®ç±»å‹ åªèƒ½å­˜ä¸€ä½0/1
 
     I2C_SDA=AckBit;
     I2C_SCL=1;
@@ -62,11 +62,11 @@ void I2C_SendAck(unsigned char AckBit){// bit C51ÖĞÌØÓĞÊı¾İÀàĞÍ Ö»ÄÜ´æÒ»Î»0/1
 }
 
 
-//I2C½ÓÊÕÓ¦´ğ
+//I2Cæ¥æ”¶åº”ç­”
 unsigned char I2C_ReceiveAck(){
     
     unsigned char AckBit=0;
-    I2C_SDA=1;//ÊÍ·Å
+    I2C_SDA=1;//é‡Šæ”¾
     I2C_SCL=1;
     AckBit=I2C_SDA;
     I2C_SCL=0;
@@ -78,4 +78,4 @@ unsigned char I2C_ReceiveAck(){
 
 
 
-#endif//ÎÄ¼ş½áÊø
+#endif//æ–‡ä»¶ç»“æŸ
