@@ -1,10 +1,12 @@
 #include"reg52.h"		
 typedef unsigned int ui;	  
 typedef unsigned char uc;
+//---------138译码器的三个IO口-----------
 sbit LSA=P2^2;
 sbit LSB=P2^3;
 sbit LSC=P2^4;
-sbit beep=P1^5;
+//---------138译码器的三个IO口-----------
+sbit beep=P1^5;//蜂鸣器
 
 unsigned int hours=13,minutes=30,seconds=0,k=0;
 
@@ -12,10 +14,12 @@ void delaytime(unsigned int m)  // m代表需要延时的毫秒数
 {
     unsigned int x,y;
     for(x=m;x>0;x--){
-		for(y=110;y>0;y--);//延时1ms
+	    for(y=110;y>0;y--);//延时1ms
 	}
         
 }
+
+
 void Timer0Init()
 {
 	TMOD|=0X01;//选择为定时器0模式，工作方式1，仅用TR0打开启动。
@@ -25,6 +29,7 @@ void Timer0Init()
 	EA=1;//打开总中断
 	TR0=1;//打开定时器			
 }
+
 
 void display(unsigned int x,unsigned int y){
 //x 代表哪个数码管  y表示显示的数字
@@ -87,10 +92,6 @@ void Timer0() interrupt 1
 			}
 		}
 	}
-
-	
-
-	
 	
 }
 
@@ -98,22 +99,8 @@ void Timer0() interrupt 1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*	P0=s[i];
+/* 138译码器IO口设置，选择点亮哪个数码管
+	P0=s[i];
 	LSA=0;LSB=0;LSC=0;//led1 
 	LSA=1;LSB=0;LSC=0;//led2 
 	LSA=0;LSB=1;LSC=0;//led3
@@ -122,7 +109,7 @@ void Timer0() interrupt 1
 	LSA=1;LSB=0;LSC=1;//led6
 	LSA=0;LSB=1;LSC=1;//led7
 	LSA=1;LSB=1;LSC=1;//led8
-	*/
+*/
 
 
 
