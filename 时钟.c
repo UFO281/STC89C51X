@@ -1,3 +1,5 @@
+//----------------------------使用数码管显示时钟（Use nixie tube to display clock）-----------
+
 #include"reg52.h"		
 typedef unsigned int ui;	  
 typedef unsigned char uc;
