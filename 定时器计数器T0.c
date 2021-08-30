@@ -78,7 +78,7 @@ void time0() interrupt 1
 	TL0=0X9c;//定时器低8位 100us
 	i++;
 	if(i==10000){//100us*10*1000=1s
-
+		i=0;
 		led=~led;//1s翻转一次 led
 	}	
 	
