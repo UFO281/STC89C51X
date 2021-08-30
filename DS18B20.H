@@ -1,149 +1,149 @@
-/*--------------ÎÂ¶È´«¸ĞÆ÷DS18B20Ê¹ÓÃÀı×Ó-------------------
+/*--------------æ¸©åº¦ä¼ æ„Ÿå™¨DS18B20ä½¿ç”¨ä¾‹å­-----ä½¿ç”¨0.96OLEDæ˜¾ç¤ºæ¸©åº¦--------------
 void main(){
 
 	float T;
 	unsigned int x;
 	DS18B20_convert_T();
 	delay_ms(1000);
-    OLED_Init();//³õÊ¼»¯OLED  
-	OLED_Clear();//ÇåÆÁ
+    OLED_Init();//åˆå§‹åŒ–OLED  
+	OLED_Clear();//æ¸…å±
 	while(1){
 
-		DS18B20_convert_T();//×ª»¯ÎÂ¶È
-		T=DS18B20_read_temp();//¶ÁÈ¡ÎÂ¶È
+		DS18B20_convert_T();//è½¬åŒ–æ¸©åº¦
+		T=DS18B20_read_temp();//è¯»å–æ¸©åº¦
 		if(T<0){ 
-			OLED_ShowString(40,1,"-");//ÔÚ40ÁĞ 1ĞĞ ÏÔÊ¾×Ö·û´® -
+			OLED_ShowString(40,1,"-");//åœ¨40åˆ— 1è¡Œ æ˜¾ç¤ºå­—ç¬¦ä¸² -
 			T=-T;
 		}
 		else{
-			OLED_ShowString(40,1,"+");//ÔÚ40ÁĞ 1ĞĞ ÏÔÊ¾×Ö·û´® +
+			OLED_ShowString(40,1,"+");//åœ¨40åˆ— 1è¡Œ æ˜¾ç¤ºå­—ç¬¦ä¸² +
 		}
 		x=T*100;
-		x=(x%1000)%100;//ÏÔÊ¾Ğ¡ÊıµãºóÁ½Î»Ğ¡Êı
-		OLED_ShowString(0,1,"Temp:");//ÔÚ0ÁĞ 1ĞĞ ÏÔÊ¾×Ö·û´®PWM
-		OLED_ShowNum(50,1,T,3,16);//ÏÔÊ¾ÕûÊı55 ÔÚ35ÁĞ 4ĞĞ 16X16×ÖÌå
-		OLED_ShowString(75,1,".");//ÔÚ0ÁĞ 4ĞĞ ÏÔÊ¾×Ö·û´® %
-		OLED_ShowNum(80,1,x,2,16);//ÏÔÊ¾ÕûÊı55 ÔÚ35ÁĞ 4ĞĞ 16X16×ÖÌå
-		OLED_ShowString(100,1,"c");//ÔÚ0ÁĞ 4ĞĞ ÏÔÊ¾×Ö·û´® %
-		delay_ms(500);//ÑÓÊ±500ms
+		x=(x%1000)%100;//æ˜¾ç¤ºå°æ•°ç‚¹åä¸¤ä½å°æ•°
+		OLED_ShowString(0,1,"Temp:");//åœ¨0åˆ— 1è¡Œ æ˜¾ç¤ºå­—ç¬¦ä¸²PWM
+		OLED_ShowNum(50,1,T,3,16);//æ˜¾ç¤ºæ•´æ•°55 åœ¨35åˆ— 4è¡Œ 16X16å­—ä½“
+		OLED_ShowString(75,1,".");//åœ¨0åˆ— 4è¡Œ æ˜¾ç¤ºå­—ç¬¦ä¸² %
+		OLED_ShowNum(80,1,x,2,16);//æ˜¾ç¤ºæ•´æ•°55 åœ¨35åˆ— 4è¡Œ 16X16å­—ä½“
+		OLED_ShowString(100,1,"c");//åœ¨0åˆ— 4è¡Œ æ˜¾ç¤ºå­—ç¬¦ä¸² %
+		delay_ms(500);//å»¶æ—¶500ms
 		
 	}
 }
---------------ÎÂ¶È´«¸ĞÆ÷DS18B20Ê¹ÓÃÀı×Ó-------------------*/
+--------------æ¸©åº¦ä¼ æ„Ÿå™¨DS18B20ä½¿ç”¨ä¾‹å­-------------------*/
 
 #ifndef _DS18B20_H
 #define _DS18B20_H
 #include"OLED096.h"
 #include"intrins.h"
-#define   DS18B20_SKIP_ROM       0xcc  //ºöÂÔROMÖ¸Áî
-#define   DS18B20_convert_temp   0x44  //ÎÂ¶È×ª»»Ö¸Áî
-#define   DS18B20_read_register  0xBE  //¶ÁÔİ´æÆ÷Ö¸Áî
-sbit one_Wire=P3^7;//DS18B20 µ¥×ÜÏß½Ó¿Ú 
+#define   DS18B20_SKIP_ROM       0xcc  //å¿½ç•¥ROMæŒ‡ä»¤
+#define   DS18B20_convert_temp   0x44  //æ¸©åº¦è½¬æ¢æŒ‡ä»¤
+#define   DS18B20_read_register  0xBE  //è¯»æš‚å­˜å™¨æŒ‡ä»¤
+sbit one_Wire=P3^7;//DS18B20 å•æ€»çº¿æ¥å£ 
 
 
 
-//------------------µ¥×ÜÏßĞ­ÒéÇøÓò---------------ÍùÏÂ-------------
+//------------------å•æ€»çº¿åè®®åŒºåŸŸ---------------å¾€ä¸‹-------------
 
-//µ¥×ÜÏß³õÊ¼»¯
-bit One_wire_Init(){//·µ»ØÖµ Ö»·µ»Ø1Î» 0/1
+//å•æ€»çº¿åˆå§‹åŒ–
+bit One_wire_Init(){//è¿”å›å€¼ åªè¿”å›1ä½ 0/1
     
-    unsigned char i;//¶¨Òå±äÁ¿Òª·ÅÔÚÓï¾äµÄ×îÇ°±ß 
-	unsigned char AckBit;//Ó¦´ğÎ»
+    unsigned char i;//å®šä¹‰å˜é‡è¦æ”¾åœ¨è¯­å¥çš„æœ€å‰è¾¹ 
+	unsigned char AckBit;//åº”ç­”ä½
 	one_Wire=1;
 	one_Wire=0;
-	_nop_();i = 227;while (--i);//ÑÓÊ±500us Èç¹ûÓÃº¯ÊıÔò²»ĞĞ ÒòÎªÖ´ĞĞÒ»ÌõÓï¾äĞèÒª1us º¯ÊıÌø×ªÒ²ĞèÒªÊ±¼ä iÆäËûÓï¾äÒ²ĞèÒªÊ±¼ä 
-	one_Wire=1;//ÊÍ·Å×ÜÏß
-	_nop_();i = 29;while (--i);//ÑÓÊ±70us
-	AckBit=one_Wire;//Ó¦´ğÎ»
-	_nop_();i = 227;while (--i);//ÑÓÊ±500us 
+	_nop_();i = 227;while (--i);//å»¶æ—¶500us å¦‚æœç”¨å‡½æ•°åˆ™ä¸è¡Œ å› ä¸ºæ‰§è¡Œä¸€æ¡è¯­å¥éœ€è¦1us å‡½æ•°è·³è½¬ä¹Ÿéœ€è¦æ—¶é—´ iå…¶ä»–è¯­å¥ä¹Ÿéœ€è¦æ—¶é—´ 
+	one_Wire=1;//é‡Šæ”¾æ€»çº¿
+	_nop_();i = 29;while (--i);//å»¶æ—¶70us
+	AckBit=one_Wire;//åº”ç­”ä½
+	_nop_();i = 227;while (--i);//å»¶æ—¶500us 
 
 	return AckBit;
 
 }
 
 
-//µ¥×ÜÏß·¢ËÍÒ»Î»Êı¾İ
+//å•æ€»çº¿å‘é€ä¸€ä½æ•°æ®
 void oneWire_send_bit(unsigned char Bit){
 
 	unsigned char i;
 	one_Wire=0;
-	i = 3;while (--i);//ÑÓÊ±10us
-	one_Wire=Bit;//½«Êı¾İ·¢ËÍ¸øµ¥×ÜÏß
-	i = 22;while (--i);//ÑÓÊ±50us
+	i = 3;while (--i);//å»¶æ—¶10us
+	one_Wire=Bit;//å°†æ•°æ®å‘é€ç»™å•æ€»çº¿
+	i = 22;while (--i);//å»¶æ—¶50us
 	one_Wire=1;
 
 }
 
 
-//µ¥×ÜÏß½ÓÊÕÒ»Î»Êı¾İ
+//å•æ€»çº¿æ¥æ”¶ä¸€ä½æ•°æ®
 unsigned char oneWire_recive_bit(){
 
 	unsigned char Bit;
 	unsigned char i;
-	one_Wire=0;//À­µÍ×ÜÏß
-	_nop_();i = 1;while (--i);//ÑÓÊ±5us
-	one_Wire=1;//ÊÍ·Å×ÜÏß
-	_nop_();i = 1;while (--i);//ÑÓÊ±5us
-	Bit=one_Wire;//²ÉÑù
-	_nop_();i = 20;while (--i);//ÑÓÊ±50us
+	one_Wire=0;//æ‹‰ä½æ€»çº¿
+	_nop_();i = 1;while (--i);//å»¶æ—¶5us
+	one_Wire=1;//é‡Šæ”¾æ€»çº¿
+	_nop_();i = 1;while (--i);//å»¶æ—¶5us
+	Bit=one_Wire;//é‡‡æ ·
+	_nop_();i = 20;while (--i);//å»¶æ—¶50us
 	return Bit;
 }
 
 
-//µ¥×ÜÏß·¢ËÍÒ»¸ö×Ö½ÚÊı¾İ
+//å•æ€»çº¿å‘é€ä¸€ä¸ªå­—èŠ‚æ•°æ®
 void oneWire_send_Byte(unsigned char byte){
 
 	unsigned char i;
-	for(i=0;i<8;i++){//Ñ­»·°ËÎ» ·¢ËÍÒ»¸ö×Ö½Ú
-		oneWire_send_bit(byte&(0x01<<i));//´ÓµÍÎ»µ½¸ßÎ»·¢ËÍ³öÈ¥
+	for(i=0;i<8;i++){//å¾ªç¯å…«ä½ å‘é€ä¸€ä¸ªå­—èŠ‚
+		oneWire_send_bit(byte&(0x01<<i));//ä»ä½ä½åˆ°é«˜ä½å‘é€å‡ºå»
 	}
 }
 
 
-//µ¥×ÜÏß½ÓÊÕÒ»¸ö×Ö½ÚÊı¾İ
+//å•æ€»çº¿æ¥æ”¶ä¸€ä¸ªå­—èŠ‚æ•°æ®
 unsigned char oneWire_recive_Byte(){
 
 	unsigned char i;
 	unsigned char Byte=0x00;
-	for(i=0;i<8;i++){//Ñ­»·°ËÎ» ½ÓÊÕÒ»¸ö×Ö½Ú
+	for(i=0;i<8;i++){//å¾ªç¯å…«ä½ æ¥æ”¶ä¸€ä¸ªå­—èŠ‚
 		if(oneWire_recive_bit()){
 			Byte|=0x01<<i;
 		}
 	}
 	return Byte;
 }
-//------------------µ¥×ÜÏßĞ­ÒéÇøÓò---------------ÍùÉÏ-------------
+//------------------å•æ€»çº¿åè®®åŒºåŸŸ---------------å¾€ä¸Š-------------
 
 
-//--------------------DS18B20Ê¹ÓÃº¯Êı---------------ÍùÏÂ-------------
+//--------------------DS18B20ä½¿ç”¨å‡½æ•°---------------å¾€ä¸‹-------------
 
-//×ª»»ÎÂ¶È
+//è½¬æ¢æ¸©åº¦
 void DS18B20_convert_T(){
 
-	One_wire_Init();//1.³õÊ¼»¯ µ¥×ÜÏß
-	oneWire_send_Byte(DS18B20_SKIP_ROM);//2.ºöÂÔROMÖ¸Áî
-	oneWire_send_Byte(DS18B20_convert_temp);//3.ÎÂ¶È×ª»¯Ö¸Áî
+	One_wire_Init();//1.åˆå§‹åŒ– å•æ€»çº¿
+	oneWire_send_Byte(DS18B20_SKIP_ROM);//2.å¿½ç•¥ROMæŒ‡ä»¤
+	oneWire_send_Byte(DS18B20_convert_temp);//3.æ¸©åº¦è½¬åŒ–æŒ‡ä»¤
 
 }
 
 
-//¶ÁÈ¡ÎÂ¶È
+//è¯»å–æ¸©åº¦
 float DS18B20_read_temp(){
 
 	unsigned char TLSB,TMSB;
 	int Temp;
 	float T;
 	One_wire_Init();
-	oneWire_send_Byte(DS18B20_SKIP_ROM);//2.ºöÂÔROMÖ¸Áî
-	oneWire_send_Byte(DS18B20_read_register);//3.¶ÁÔİ´æÆ÷Ö¸Áî
-	TLSB=oneWire_recive_Byte();//µÚÒ»¸öÎÂ¶È¼Ä´æÆ÷
-	TMSB=oneWire_recive_Byte();//µÚ¶ş¸öÎÂ¶È¼Ä´æÆ÷
+	oneWire_send_Byte(DS18B20_SKIP_ROM);//2.å¿½ç•¥ROMæŒ‡ä»¤
+	oneWire_send_Byte(DS18B20_read_register);//3.è¯»æš‚å­˜å™¨æŒ‡ä»¤
+	TLSB=oneWire_recive_Byte();//ç¬¬ä¸€ä¸ªæ¸©åº¦å¯„å­˜å™¨
+	TMSB=oneWire_recive_Byte();//ç¬¬äºŒä¸ªæ¸©åº¦å¯„å­˜å™¨
 	Temp=(TMSB<<8)|TLSB;
-	T=Temp/16.0;//Êµ¼ÊÎÂ¶È
+	T=Temp/16.0;//å®é™…æ¸©åº¦
 	return T;
 }
 
-//--------------------DS18B20Ê¹ÓÃº¯Êı---------------ÍùÉÏ-------------
+//--------------------DS18B20ä½¿ç”¨å‡½æ•°---------------å¾€ä¸Š-------------
 
 
 #endif
