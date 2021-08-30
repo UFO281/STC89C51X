@@ -58,6 +58,7 @@ void I2C_SendAck(unsigned char AckBit){// bit C51中特有数据类型 只能存
     I2C_SDA=AckBit;
     I2C_SCL=1;
     I2C_SCL=0;
+ 
 }
 
 
